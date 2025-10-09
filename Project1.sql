@@ -1,5 +1,6 @@
 -------------TABLE CREATION-------------
---Fixed Tables
+--Fixed Tables Section
+--Parameter Tables
 CREATE TABLE parameter(
     id_parameter NUMBER PRIMARY KEY,
     type VARCHAR2(50),
@@ -9,6 +10,25 @@ CREATE TABLE parameter(
     modificationName VARCHAR2(50) 
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertParameter
+BEFORE INSERT
+ON parameter
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertParameter;
+
+CREATE OR REPLACE TRIGGER beforeUpdateParameter
+BEFORE UPDATE
+ON parameter
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateParameter;
+
+--Log Tables
 CREATE TABLE log(
     id_log NUMBER PRIMARY KEY,
     changetype VARCHAR2(50),
@@ -21,6 +41,25 @@ CREATE TABLE log(
     modificationName VARCHAR2(50) 
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertLog
+BEFORE INSERT
+ON log
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertLog;
+
+CREATE OR REPLACE TRIGGER beforeUpdateLog
+BEFORE UPDATE
+ON log
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateLog;
+
+--Country tables
 CREATE TABLE country (
     id_country NUMBER PRIMARY KEY,
     name VARCHAR2(50),
@@ -30,6 +69,25 @@ CREATE TABLE country (
     modificationName VARCHAR2(50)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertCountry
+BEFORE INSERT
+ON country
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertCountry;
+
+CREATE OR REPLACE TRIGGER beforeUpdateCountry
+BEFORE UPDATE
+ON country
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateCountry;
+
+--Province Tables
 CREATE TABLE province(
     id_province NUMBER PRIMARY KEY,
     name VARCHAR2(50),
@@ -41,6 +99,25 @@ CREATE TABLE province(
     FOREIGN KEY (id_country) REFERENCES country(id_country)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertProvince
+BEFORE INSERT
+ON province
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertProvince;
+
+CREATE OR REPLACE TRIGGER beforeUpdateProvince
+BEFORE UPDATE
+ON province
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateProvince;
+
+--Canton
 CREATE TABLE canton (
     id_canton NUMBER PRIMARY KEY,
     name VARCHAR2(50),
@@ -52,6 +129,25 @@ CREATE TABLE canton (
     FOREIGN KEY (id_province) REFERENCES province(id_province)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertCanton
+BEFORE INSERT
+ON canton
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertCanton;
+
+CREATE OR REPLACE TRIGGER beforeUpdateCanton
+BEFORE UPDATE
+ON canton
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateCanton;
+
+--District tables
 CREATE TABLE district (
     id_district NUMBER PRIMARY KEY,
     name VARCHAR2(50),
@@ -63,7 +159,26 @@ CREATE TABLE district (
     FOREIGN KEY (id_canton) REFERENCES canton(id_canton)
 );
 
---Entity Tables
+CREATE OR REPLACE TRIGGER beforeInsertDistrict
+BEFORE INSERT
+ON district
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertDistrict;
+
+CREATE OR REPLACE TRIGGER beforeUpdateDistrict
+BEFORE UPDATE
+ON district
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateDistrict;
+
+--Entity Tables Section
+--State Tables
 CREATE TABLE state (
     id_state NUMBER PRIMARY KEY,
     description VARCHAR(50),
@@ -73,6 +188,25 @@ CREATE TABLE state (
     modificationDate DATE
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertState
+BEFORE INSERT
+ON state
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertState;
+
+CREATE OR REPLACE TRIGGER beforeUpdateState
+BEFORE UPDATE
+ON state
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateState;
+
+--Entity Tables
 CREATE TABLE entity (
     id_entity NUMBER PRIMARY KEY,
     code NUMBER,
@@ -90,7 +224,26 @@ CREATE TABLE entity (
     FOREIGN KEY (id_district) REFERENCES district(id_district)
 );
 
---User Tables
+CREATE OR REPLACE TRIGGER beforeInsertEntity
+BEFORE INSERT
+ON entity
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertEntity;
+
+CREATE OR REPLACE TRIGGER beforeUpdateEntity
+BEFORE UPDATE
+ON entity
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateEntity;
+
+--User Tables Section
+--Gender Tables
 CREATE TABLE gender (
     id_gender NUMBER PRIMARY KEY,
     description VARCHAR2(50),
@@ -100,6 +253,25 @@ CREATE TABLE gender (
     modificationDate DATE
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertGender
+BEFORE INSERT
+ON gender
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertGender;
+
+CREATE OR REPLACE TRIGGER beforeUpdateGender
+BEFORE UPDATE
+ON gender
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateGender;
+
+--Usertype Tables
 CREATE TABLE usertype (
     id_usertype NUMBER PRIMARY KEY,
     description VARCHAR2(50),
@@ -109,6 +281,25 @@ CREATE TABLE usertype (
     modificationDate DATE
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertUsertype
+BEFORE INSERT
+ON usertype
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertUsertype;
+
+CREATE OR REPLACE TRIGGER beforeUpdateUsertype
+BEFORE UPDATE
+ON usertype
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateUsertype;
+
+--SysUser Tables
 CREATE TABLE sysuser (
     id_user NUMBER PRIMARY KEY,
     phone NUMBER,
@@ -132,6 +323,25 @@ CREATE TABLE sysuser (
     FOREIGN KEY (id_entity) REFERENCES entity(id_entity)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertUser
+BEFORE INSERT
+ON sysuser
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertUser;
+
+CREATE OR REPLACE TRIGGER beforeUpdateUser
+BEFORE UPDATE
+ON sysuser
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateUser;
+
+--Identification Tables
 CREATE TABLE identification (
     id_identification NUMBER PRIMARY KEY,
     type VARCHAR2(50),
@@ -144,6 +354,25 @@ CREATE TABLE identification (
     FOREIGN KEY (id_user) REFERENCES sysuser(id_user)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertIdentification
+BEFORE INSERT
+ON identification
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertIdentification;
+
+CREATE OR REPLACE TRIGGER beforeUpdateIdentification
+BEFORE UPDATE
+ON identification
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateIdentification;
+
+--Contact Tables
 CREATE TABLE contact (
     id_contact NUMBER PRIMARY KEY,
     description VARCHAR2(50),
@@ -155,7 +384,26 @@ CREATE TABLE contact (
     FOREIGN KEY (id_user) REFERENCES sysuser(id_user)
 );
 
---Collection Center Tables
+CREATE OR REPLACE TRIGGER beforeInsertContact
+BEFORE INSERT
+ON contact
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertContact;
+
+CREATE OR REPLACE TRIGGER beforeUpdateContact
+BEFORE UPDATE
+ON contact
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateContact;
+
+--Collection Center Section
+--Bill Tables
 CREATE TABLE bill (
     id_bill NUMBER PRIMARY KEY,
     description VARCHAR(100),
@@ -167,6 +415,25 @@ CREATE TABLE bill (
     FOREIGN KEY (id_user) REFERENCES sysuser(id_user)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertBill
+BEFORE INSERT
+ON bill
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertContact;
+
+CREATE OR REPLACE TRIGGER beforeUpdateBill
+BEFORE UPDATE
+ON bill
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateContact;
+
+--Collection Center Tables
 CREATE TABLE collectioncenter (
     id_collectioncenter NUMBER PRIMARY KEY,
     currency NUMBER,
@@ -181,6 +448,24 @@ CREATE TABLE collectioncenter (
     FOREIGN KEY (id_entity) REFERENCES entity(id_entity)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertCCenter
+BEFORE INSERT
+ON collectioncenter
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertContact;
+
+CREATE OR REPLACE TRIGGER beforeUpdateCCenter
+BEFORE UPDATE
+ON collectioncenter
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateCCenter;
+
 --Recycable Type Tables
 CREATE TABLE recycabletype (
     id_recycabletype NUMBER PRIMARY KEY,
@@ -193,6 +478,25 @@ CREATE TABLE recycabletype (
     modificationDate DATE
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertRecycabletype
+BEFORE INSERT
+ON recycabletype
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertRecycabletype;
+
+CREATE OR REPLACE TRIGGER beforeUpdateRecycabletype
+BEFORE UPDATE
+ON recycabletype
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateRecycabletype;
+
+--Category Tables
 CREATE TABLE category (
     id_category NUMBER PRIMARY KEY,
     description VARCHAR2(50),
@@ -204,7 +508,26 @@ CREATE TABLE category (
     FOREIGN KEY (id_recycabletype) REFERENCES recycabletype(id_recycabletype)
 );
 
---Unit Tables
+CREATE OR REPLACE TRIGGER beforeInsertCategory
+BEFORE INSERT
+ON category
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertCategory;
+
+CREATE OR REPLACE TRIGGER beforeUpdateCategory
+BEFORE UPDATE
+ON category
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateCategory;
+
+--Unit Section
+--Money tables
 CREATE TABLE money (
     id_money NUMBER PRIMARY KEY,
     value NUMBER,
@@ -215,6 +538,25 @@ CREATE TABLE money (
     modificationDate DATE
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertMoney
+BEFORE INSERT
+ON money
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertMoney;
+
+CREATE OR REPLACE TRIGGER beforeUpdateMoney
+BEFORE UPDATE
+ON money
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateMoney;
+
+--Unit Tables
 CREATE TABLE unit (
     id_unit NUMBER PRIMARY KEY,
     name VARCHAR2(50),
@@ -230,6 +572,24 @@ CREATE TABLE unit (
     FOREIGN KEY (id_entity) REFERENCES entity(id_entity)
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertUnit
+BEFORE INSERT
+ON unit
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertUnit;
+
+CREATE OR REPLACE TRIGGER beforeUpdateUnit
+BEFORE UPDATE
+ON unit
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateUnit;
+
 --Product Tables
 CREATE TABLE product (
     id_product NUMBER PRIMARY KEY,
@@ -243,12 +603,49 @@ CREATE TABLE product (
     modificationDate DATE
 );
 
+CREATE OR REPLACE TRIGGER beforeInsertProduct
+BEFORE INSERT
+ON product
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertProduct;
+
+CREATE OR REPLACE TRIGGER beforeUpdateProduct
+BEFORE UPDATE
+ON product
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdateProduct;
+
+--Point Tables
 CREATE TABLE point (
     id_point NUMBER PRIMARY KEY,
     amount NUMBER,
     id_product NUMBER,
     FOREIGN KEY (id_product) REFERENCES product(id_product)
 );
+
+CREATE OR REPLACE TRIGGER beforeInsertPoint
+BEFORE INSERT
+ON point
+FOR EACH ROW
+BEGIN
+    :new.creationName:= user;
+    :new.creationDate:= sysdate;
+END beforeInsertPoint;
+
+CREATE OR REPLACE TRIGGER beforeUpdatePoint
+BEFORE UPDATE
+ON point
+FOR EACH ROW
+BEGIN
+    :new.modiicationName:= user;
+    :new.modificationDate:= sysdate;
+END beforeUpdatePoint;
 
 --NN Relation Tables
 CREATE TABLE entityXproduct (
